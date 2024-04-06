@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/MakeNowJust/heredoc"
 	"github.com/cli/cli/v2/api"
 	"github.com/cli/cli/v2/internal/ghrepo"
 	"github.com/cli/cli/v2/internal/tableprinter"
@@ -52,8 +53,28 @@ func NewCmdList(f *cmdutil.Factory, runF func(*ListOptions) error) *cobra.Comman
 	}
 
 	cmd := &cobra.Command{
-		Use:     "list",
-		Short:   "List recent workflow runs",
+		Use:   "list",
+		Short: "List recent workflow runs",
+		Long: heredoc.Docf(`
+			List recent workflow runs.
+
+			Available JSON fields to be used with the %[1]s--json%[1]s option are:
+			  - name
+			  - displayTitle
+			  - headBranch
+			  - headSha
+			  - createdAt
+			  - updatedAt
+			  - startedAt
+			  - status
+			  - conclusion
+			  - event
+			  - number
+			  - databaseId
+			  - workflowDatabaseId
+			  - workflowName
+			  - url
+		`, "`"),
 		Aliases: []string{"ls"},
 		Args:    cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
